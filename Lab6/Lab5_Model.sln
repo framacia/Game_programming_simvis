@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab5_Model", "Lab5_Model\Lab5_Model.csproj", "{5F64CFBA-B41F-4180-819C-7661BDB8E292}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F64CFBA-B41F-4180-819C-7661BDB8E292}.Debug|x86.ActiveCfg = Debug|x86
+		{5F64CFBA-B41F-4180-819C-7661BDB8E292}.Debug|x86.Build.0 = Debug|x86
+		{5F64CFBA-B41F-4180-819C-7661BDB8E292}.Release|x86.ActiveCfg = Release|x86
+		{5F64CFBA-B41F-4180-819C-7661BDB8E292}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {776B70C8-5921-49EC-BB8B-2E72CD71AB6F}
+	EndGlobalSection
+EndGlobal

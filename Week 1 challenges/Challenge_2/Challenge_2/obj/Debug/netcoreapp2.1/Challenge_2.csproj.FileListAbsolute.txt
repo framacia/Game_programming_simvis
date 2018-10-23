@@ -1,0 +1,11 @@
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\bin\Debug\netcoreapp2.1\Challenge_2.deps.json
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\bin\Debug\netcoreapp2.1\Challenge_2.runtimeconfig.json
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\bin\Debug\netcoreapp2.1\Challenge_2.runtimeconfig.dev.json
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\bin\Debug\netcoreapp2.1\Challenge_2.dll
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\bin\Debug\netcoreapp2.1\Challenge_2.pdb
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\obj\Debug\netcoreapp2.1\Challenge_2.csprojAssemblyReference.cache
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\obj\Debug\netcoreapp2.1\Challenge_2.csproj.CoreCompileInputs.cache
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\obj\Debug\netcoreapp2.1\Challenge_2.AssemblyInfoInputs.cache
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\obj\Debug\netcoreapp2.1\Challenge_2.AssemblyInfo.cs
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\obj\Debug\netcoreapp2.1\Challenge_2.dll
+C:\Users\F.MaciaVarela1\source\repos\Challenge_2\Challenge_2\obj\Debug\netcoreapp2.1\Challenge_2.pdb
