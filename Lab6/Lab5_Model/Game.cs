@@ -9,7 +9,7 @@ namespace Lab5_Model
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Lab5_Model : Game
+    public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -37,7 +37,7 @@ namespace Lab5_Model
         //GameObject List
         List<GameObject> gameObjects;        
 
-        public Lab5_Model()
+        public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -92,7 +92,7 @@ namespace Lab5_Model
             {
                 Model = Content.Load<Model>("UFO"),
                 Position = new Vector3(-10f, 0.5f, -10f),
-                Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                Scale = new Vector3(0.75f, 0.1f, 0.2f),
             });
 
             gameObjects.Add(new GameObject()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/F.MaciaVarela1/Programming/repos/Lab6/Lab5_Model/Content/ufo_diffuse2.png</SourceFile>
+  <SourceFile>C:/Users/F.MaciaVarela1/Desktop/Game Programming/Game_programming_simvis/Lab6/Lab5_Model/Content/ufo_diffuse2.png</SourceFile>
   <SourceTime>2018-10-10T16:36:33.5450635+01:00</SourceTime>
-  <DestFile>C:/Users/F.MaciaVarela1/Programming/repos/Lab6/Lab5_Model/Content/bin/Windows/Content/ufo_diffuse2_0.xnb</DestFile>
-  <DestTime>2018-10-16T10:34:08.1267659+01:00</DestTime>
+  <DestFile>C:/Users/F.MaciaVarela1/Desktop/Game Programming/Game_programming_simvis/Lab6/Lab5_Model/Content/bin/Windows/Content/ufo_diffuse2_0.xnb</DestFile>
+  <DestTime>2018-10-23T12:56:05.2614518+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-09-23T22:55:52+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

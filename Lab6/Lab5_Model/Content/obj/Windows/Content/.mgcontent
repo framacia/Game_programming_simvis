@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/F.MaciaVarela1/Programming/repos/Lab6/Lab5_Model/Content/UFO.FBX</File>
-    <File>C:/Users/F.MaciaVarela1/Programming/repos/Lab6/Lab5_Model/Content/weird_stuff.obj</File>
+    <File>C:/Users/F.MaciaVarela1/Desktop/Game Programming/Game_programming_simvis/Lab6/Lab5_Model/Content/UFO.FBX</File>
+    <File>C:/Users/F.MaciaVarela1/Desktop/Game Programming/Game_programming_simvis/Lab6/Lab5_Model/Content/weird_stuff.obj</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

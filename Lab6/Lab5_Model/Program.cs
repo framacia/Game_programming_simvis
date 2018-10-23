@@ -14,7 +14,7 @@ namespace Lab5_Model
         [STAThread]
         static void Main()
         {
-            using (var game = new Lab5_Model())
+            using (var game = new Game())
                 game.Run();
         }
     }

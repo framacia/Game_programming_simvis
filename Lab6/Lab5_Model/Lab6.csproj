@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameObject.cs" />
-    <Compile Include="Lab5_Model.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
