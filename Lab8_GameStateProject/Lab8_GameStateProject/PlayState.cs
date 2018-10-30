@@ -38,6 +38,10 @@ namespace Lab8_GameStateProject
         //GameObject List
         List<GameObject> gameObjects;
 
+        //Font
+        private SpriteFont font;
+
+
         public PlayState() { }
 
         public void Initialize(Game1 game, ContentManager c,
@@ -84,6 +88,7 @@ namespace Lab8_GameStateProject
         public void LoadContent()
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
+            font = Content.Load<SpriteFont>("blade_runner");
 
             gameObjects.Add(new GameObject()
             {
@@ -158,7 +163,14 @@ namespace Lab8_GameStateProject
 
         public void Draw()
         {
-            graphicsDevice.Clear(Color.AntiqueWhite);
+            graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+
+            graphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "Test text",
+                new Vector2(10, 10), Color.White);
+            spriteBatch.End();
 
             foreach (GameObject gameObject in gameObjects)
             {

@@ -16,6 +16,8 @@ namespace Lab8_GameStateProject
         Game1 game;
         private SpriteFont font;
 
+        private Color color;
+
         public MenuState() { }
 
         public void Initialize(Game1 game, ContentManager c,
@@ -25,6 +27,8 @@ namespace Lab8_GameStateProject
             graphicsDevice = gd;
             Content = c;
             this.game = game;
+
+            color = Color.Black;
         }
 
         public void Enter()
@@ -40,7 +44,7 @@ namespace Lab8_GameStateProject
         public void LoadContent()
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
-            font = Content.Load<SpriteFont>("montserrat");
+            font = Content.Load<SpriteFont>("blade_runner");
         }
 
         public void UnloadContent()
@@ -59,11 +63,35 @@ namespace Lab8_GameStateProject
             {
                 game.ChangeState(game.playState);
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                color = Color.Yellow;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                color = Color.Blue;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                color = Color.Red;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                color = Color.Green;
+            }
+
+
         }
 
         public void Draw()
         {
-            graphicsDevice.Clear(Color.Black);
+            graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+
+            graphicsDevice.Clear(color);
 
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "welcome to the menu",
