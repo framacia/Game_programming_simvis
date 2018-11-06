@@ -73,6 +73,13 @@ namespace Lab8_GameStateProject
             camSide = Vector3.Left;
             camPosition = new Vector3(0f, 0f, -5);
             camTarget = camPosition + camForward;
+
+            //Setup collisions
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.InitAABB();
+                gameObject.InitBSphere();
+            }
         }
 
         public void Enter()
@@ -92,16 +99,16 @@ namespace Lab8_GameStateProject
 
             gameObjects.Add(new GameObject()
             {
-                Model = Content.Load<Model>("UFO"),
-                Position = new Vector3(-10f, 0.5f, -10f),
-                Scale = new Vector3(0.75f, 0.1f, 0.2f),
+                model = Content.Load<Model>("UFO"),
+                position = new Vector3(-10f, 0.5f, -10f),
+                scale = new Vector3(0.75f, 0.1f, 0.2f),
             });
 
             gameObjects.Add(new GameObject()
             {
-                Model = Content.Load<Model>("UFO"),
-                Position = new Vector3(10f, 0.5f, 10f),
-                Scale = new Vector3(0.5f, 0.5f, 0.5f),
+                model = Content.Load<Model>("UFO"),
+                position = new Vector3(10f, 0.5f, 10f),
+                scale = new Vector3(0.5f, 0.5f, 0.5f),
             });
         }
 
@@ -112,6 +119,33 @@ namespace Lab8_GameStateProject
 
         public void Update(GameTime gametime)
         {
+            Vector3 oldPosition = camPosition;
+
+            //Collision code
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (Vector3.Distance(camPosition,
+                    gameObjects[0].position) < 35f)
+                {
+                    camPosition = oldPosition;
+                    break;
+                }                
+            }
+
+            //Recalculate AABB/bSphere for moving gameObject
+            gameObjects[0].InitAABB(); //gameObjects[0].InitBSphere();
+
+            for (int i=1; i<gameObjects.Count; i++)
+            {
+                if (gameObjects[0].aabb.Intersects(gameObjects[i].aabb))
+                //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
+                {
+                    gameObjects[0].position = oldPosition;
+                    gameObjects[0].scale = oldScale;
+                    gameObjects[0].rotationMatrix = oldRotMatrix;
+                }
+            }
+
             //Change to menu state
             if (Keyboard.GetState().IsKeyDown(Keys.Delete))
             {
@@ -167,14 +201,9 @@ namespace Lab8_GameStateProject
 
             graphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Test text",
-                new Vector2(10, 10), Color.White);
-            spriteBatch.End();
-
             foreach (GameObject gameObject in gameObjects)
             {
-                foreach (ModelMesh mesh in gameObject.Model.Meshes)
+                foreach (ModelMesh mesh in gameObject.model.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
@@ -198,6 +227,11 @@ namespace Lab8_GameStateProject
                     mesh.Draw();
                 }
             }
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "Test text",
+                new Vector2(10, 10), Color.White);
+            spriteBatch.End();
         }
     }
 }

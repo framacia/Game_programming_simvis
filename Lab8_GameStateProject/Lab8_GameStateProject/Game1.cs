@@ -18,6 +18,9 @@ namespace Lab8_GameStateProject
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.graphics.PreferredBackBufferWidth = 1024;
+            this.graphics.PreferredBackBufferHeight = 800;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -82,8 +85,6 @@ namespace Lab8_GameStateProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-
             currentState.Draw();
 
             base.Draw(gameTime);
