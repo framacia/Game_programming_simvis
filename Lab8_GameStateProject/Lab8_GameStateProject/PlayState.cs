@@ -62,16 +62,19 @@ namespace Lab8_GameStateProject
             viewMatrix = Matrix.CreateLookAt(camPosition,
                 camTarget, Vector3.Up);
 
-            basicEffect = new BasicEffect(graphicsDevice);
-            basicEffect.VertexColorEnabled = false;
-            basicEffect.LightingEnabled = true;
+            //BasicEffect setup
+            basicEffect = new BasicEffect(graphicsDevice)
+            {
+                VertexColorEnabled = false,
+                LightingEnabled = true
+            };
 
             gameObjects = new List<GameObject>();
 
             //Setup camera
             camForward = Vector3.Forward; //(0,0,-1)
             camSide = Vector3.Left;
-            camPosition = new Vector3(0f, 0f, -5);
+            camPosition = new Vector3(0f, 0.2f, -5);
             camTarget = camPosition + camForward;
 
             //Setup collisions
@@ -99,15 +102,15 @@ namespace Lab8_GameStateProject
 
             gameObjects.Add(new GameObject()
             {
-                model = Content.Load<Model>("UFO"),
-                position = new Vector3(-10f, 0.5f, -10f),
-                scale = new Vector3(0.75f, 0.1f, 0.2f),
+                model = Content.Load<Model>("sh_1\\SH_BUILDING_01"),
+                position = new Vector3(10f, -0.5f, 10f),
+                scale = new Vector3(0.5f, 0.5f, 0.5f),
             });
 
             gameObjects.Add(new GameObject()
             {
-                model = Content.Load<Model>("UFO"),
-                position = new Vector3(10f, 0.5f, 10f),
+                model = Content.Load<Model>("sh_10\\SH_BUILDING_10"),
+                position = new Vector3(0.75f, -0.975f, 10.13f),
                 scale = new Vector3(0.5f, 0.5f, 0.5f),
             });
         }
@@ -133,7 +136,7 @@ namespace Lab8_GameStateProject
             }
 
             //Recalculate AABB/bSphere for moving gameObject
-            gameObjects[0].InitAABB(); //gameObjects[0].InitBSphere();
+            /*gameObjects[0].InitAABB(); //gameObjects[0].InitBSphere();
 
             for (int i=1; i<gameObjects.Count; i++)
             {
@@ -144,7 +147,7 @@ namespace Lab8_GameStateProject
                     gameObjects[0].scale = oldScale;
                     gameObjects[0].rotationMatrix = oldRotMatrix;
                 }
-            }
+            }*/
 
             //Change to menu state
             if (Keyboard.GetState().IsKeyDown(Keys.Delete))
@@ -199,7 +202,7 @@ namespace Lab8_GameStateProject
         {
             graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
-            graphicsDevice.Clear(Color.Black);
+            graphicsDevice.Clear(Color.Gray);
 
             foreach (GameObject gameObject in gameObjects)
             {
@@ -217,6 +220,10 @@ namespace Lab8_GameStateProject
                         effect.AmbientLightColor =
                             new Vector3(0.7f, 0.7f, 0.7f);
                         effect.PreferPerPixelLighting = true;
+                        effect.FogEnabled = true;
+                        effect.FogColor = new Vector3(0.55f, 0.55f, 0.55f);
+                        effect.FogStart = 1f;
+                        effect.FogEnd = 10f;
 
                         effect.View = viewMatrix;
                         // No longer using worldMatrix variable
