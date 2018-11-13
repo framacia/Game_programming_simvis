@@ -41,6 +41,9 @@ namespace Lab8_GameStateProject
         //Font
         private SpriteFont font;
 
+        //Skybox
+        Skybox skybox;
+
 
         public PlayState() { }
 
@@ -113,6 +116,15 @@ namespace Lab8_GameStateProject
                 position = new Vector3(0.75f, -0.975f, 10.13f),
                 scale = new Vector3(0.5f, 0.5f, 0.5f),
             });
+
+            gameObjects.Add(new GameObject()
+            {
+                model = Content.Load<Model>("monocube\\monoCube"),
+                position = new Vector3(0f, -1f, 0f),
+                scale = new Vector3(100f, 0.1f, 100f),
+            });
+
+            skybox = new Skybox("skybox\\sorbin", Content);
         }
 
         public void UnloadContent()
@@ -200,10 +212,29 @@ namespace Lab8_GameStateProject
 
         public void Draw()
         {
-            graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-
+            //Draw background colour
             graphicsDevice.Clear(Color.Gray);
 
+            //Draw skybox
+
+
+            RasterizerState skyBoxRasterizerState = new RasterizerState();
+            skyBoxRasterizerState.CullMode = CullMode.CullClockwiseFace;
+            graphicsDevice.RasterizerState = skyBoxRasterizerState;
+
+            viewMatrix.Decompose(out Vector3 tmpScale, out Quaternion tmpRotation, out Vector3 tmpTranslation);
+            skybox.Draw(Matrix.CreateFromQuaternion(tmpRotation),
+                projectionMatrix);
+
+            RasterizerState rasterizerState = new RasterizerState();
+            rasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
+            graphicsDevice.RasterizerState = rasterizerState;          
+
+            //Depth buffer on
+            graphicsDevice.DepthStencilState = 
+                new DepthStencilState() { DepthBufferEnable = true };
+
+            //Draw gameObjects
             foreach (GameObject gameObject in gameObjects)
             {
                 foreach (ModelMesh mesh in gameObject.model.Meshes)
@@ -235,6 +266,7 @@ namespace Lab8_GameStateProject
                 }
             }
 
+            //Draw 2D (text)
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "Test text",
                 new Vector2(10, 10), Color.White);
