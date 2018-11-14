@@ -21,8 +21,11 @@ namespace Lab8_GameStateProject
 
         public void Draw(Matrix view, Matrix projection)
         {
+            //  Go  through  each  pass  in  the  effect,  but  we  know  there  is  only  one...
             foreach (EffectPass pass in skyBoxEffect.CurrentTechnique.Passes)
             {
+                //  Draw  all  of  the  components  of  the  mesh                  
+                //  but  we  know  the  cube  really  only  has  one  mesh
                 foreach (ModelMesh mesh in skyBox.Meshes)
                 {
                     foreach(ModelMeshPart part in mesh.MeshParts)

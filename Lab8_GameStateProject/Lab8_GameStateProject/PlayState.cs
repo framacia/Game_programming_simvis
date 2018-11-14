@@ -22,7 +22,6 @@ namespace Lab8_GameStateProject
         Matrix viewMatrix;
 
         //Camera
-        Vector3 cameraLookAt;
         Vector3 camForward;
         Vector3 camSide;
         Vector3 camPosition;
@@ -32,9 +31,6 @@ namespace Lab8_GameStateProject
         //BasicEffect shader
         BasicEffect basicEffect;
 
-        //3D Model
-        //Model UFO; // No longer used
-
         //GameObject List
         List<GameObject> gameObjects;
 
@@ -43,6 +39,7 @@ namespace Lab8_GameStateProject
 
         //Skybox
         Skybox skybox;
+
 
 
         public PlayState() { }
@@ -55,15 +52,19 @@ namespace Lab8_GameStateProject
             Content = c;
             this.game = game;
 
+            //Setup camera
+            camForward = Vector3.Forward; //(0,0,-1)
+            camSide = Vector3.Left;
+            camPosition = new Vector3(0f, 0.2f, -5);
+            camTarget = camPosition + camForward;
+
             origin = new Vector3(0f, 0f, 0f);
             worldMatrix = Matrix.CreateWorld(origin,
                 Vector3.Forward, Vector3.Up);
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.ToRadians(60f),
                 graphicsDevice.DisplayMode.AspectRatio, 1f, 500f);
-            cameraLookAt = new Vector3(0f, 0f, 0f);
-            viewMatrix = Matrix.CreateLookAt(camPosition,
-                camTarget, Vector3.Up);
+            
 
             //BasicEffect setup
             basicEffect = new BasicEffect(graphicsDevice)
@@ -74,11 +75,8 @@ namespace Lab8_GameStateProject
 
             gameObjects = new List<GameObject>();
 
-            //Setup camera
-            camForward = Vector3.Forward; //(0,0,-1)
-            camSide = Vector3.Left;
-            camPosition = new Vector3(0f, 0.2f, -5);
-            camTarget = camPosition + camForward;
+            
+
 
             //Setup collisions
             foreach (GameObject gameObject in gameObjects)
@@ -216,8 +214,6 @@ namespace Lab8_GameStateProject
             graphicsDevice.Clear(Color.Gray);
 
             //Draw skybox
-
-
             RasterizerState skyBoxRasterizerState = new RasterizerState();
             skyBoxRasterizerState.CullMode = CullMode.CullClockwiseFace;
             graphicsDevice.RasterizerState = skyBoxRasterizerState;
@@ -228,7 +224,7 @@ namespace Lab8_GameStateProject
 
             RasterizerState rasterizerState = new RasterizerState();
             rasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
-            graphicsDevice.RasterizerState = rasterizerState;          
+            graphicsDevice.RasterizerState = rasterizerState;
 
             //Depth buffer on
             graphicsDevice.DepthStencilState = 
