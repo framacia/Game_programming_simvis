@@ -65,7 +65,6 @@ namespace Lab8_GameStateProject
                 MathHelper.ToRadians(60f),
                 graphicsDevice.DisplayMode.AspectRatio, 1f, 500f);
             
-
             //BasicEffect setup
             basicEffect = new BasicEffect(graphicsDevice)
             {
@@ -74,9 +73,6 @@ namespace Lab8_GameStateProject
             };
 
             gameObjects = new List<GameObject>();
-
-            
-
 
             //Setup collisions
             foreach (GameObject gameObject in gameObjects)
