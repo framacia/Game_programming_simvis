@@ -27,19 +27,20 @@ namespace Lab8_GameStateProject
         Vector3 camPosition;
         Vector3 camTarget;
         Matrix cameraRotation;
+        float camRadius;
 
         //BasicEffect shader
         BasicEffect basicEffect;
 
         //GameObject List
         List<GameObject> gameObjects;
+        GameObject cameraObject;
 
         //Font
         private SpriteFont font;
 
         //Skybox
         Skybox skybox;
-
 
 
         public PlayState() { }
@@ -57,6 +58,7 @@ namespace Lab8_GameStateProject
             camSide = Vector3.Left;
             camPosition = new Vector3(0f, 0.2f, -5);
             camTarget = camPosition + camForward;
+            camRadius = 2.5f;
 
             origin = new Vector3(0f, 0f, 0f);
             worldMatrix = Matrix.CreateWorld(origin,
@@ -80,6 +82,7 @@ namespace Lab8_GameStateProject
                 gameObject.InitAABB();
                 gameObject.InitBSphere();
             }
+
         }
 
         public void Enter()
@@ -102,6 +105,7 @@ namespace Lab8_GameStateProject
                 model = Content.Load<Model>("sh_1\\SH_BUILDING_01"),
                 position = new Vector3(10f, -0.5f, 10f),
                 scale = new Vector3(0.5f, 0.5f, 0.5f),
+                radius = 2f,
             });
 
             gameObjects.Add(new GameObject()
@@ -109,14 +113,31 @@ namespace Lab8_GameStateProject
                 model = Content.Load<Model>("sh_10\\SH_BUILDING_10"),
                 position = new Vector3(0.75f, -0.975f, 10.13f),
                 scale = new Vector3(0.5f, 0.5f, 0.5f),
+                radius = 2f,
             });
 
             gameObjects.Add(new GameObject()
             {
-                model = Content.Load<Model>("monocube\\monoCube"),
+                model = Content.Load<Model>("monocube\\street_cube"),
                 position = new Vector3(0f, -1f, 0f),
                 scale = new Vector3(100f, 0.1f, 100f),
             });
+
+            foreach(GameObject gameObject in gameObjects)
+            {
+                gameObject.InitAABB();
+                gameObject.InitBSphere();
+            }
+
+            cameraObject = new GameObject()
+            {
+                model = Content.Load<Model>("monocube\\monoCube"),
+                position = camPosition,
+                scale = new Vector3(1.4f, 0.1f, 1.1f),
+            };
+
+            cameraObject.InitAABB();
+            cameraObject.InitBSphere();
 
             skybox = new Skybox("skybox\\sorbin", Content);
         }
@@ -128,38 +149,10 @@ namespace Lab8_GameStateProject
 
         public void Update(GameTime gametime)
         {
+            //Setup old position
             Vector3 oldPosition = camPosition;
 
-            //Collision code
-            foreach (GameObject gameObject in gameObjects)
-            {
-                if (Vector3.Distance(camPosition,
-                    gameObjects[0].position) < 35f)
-                {
-                    camPosition = oldPosition;
-                    break;
-                }                
-            }
-
-            //Recalculate AABB/bSphere for moving gameObject
-            /*gameObjects[0].InitAABB(); //gameObjects[0].InitBSphere();
-
-            for (int i=1; i<gameObjects.Count; i++)
-            {
-                if (gameObjects[0].aabb.Intersects(gameObjects[i].aabb))
-                //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
-                {
-                    gameObjects[0].position = oldPosition;
-                    gameObjects[0].scale = oldScale;
-                    gameObjects[0].rotationMatrix = oldRotMatrix;
-                }
-            }*/
-
-            //Change to menu state
-            if (Keyboard.GetState().IsKeyDown(Keys.Delete))
-            {
-                game.ChangeState(game.menuState);
-            }
+            
 
             //Camera movement
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
@@ -202,6 +195,72 @@ namespace Lab8_GameStateProject
 
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget,
                 Vector3.Up);
+
+            //Camera Collision code
+            /*foreach (GameObject gameObject in gameObjects)
+            {
+                if (Vector3.Distance(camPosition,
+                    gameObjects[0].position) < (gameObject.radius + camRadius))
+                {
+                    camPosition = oldPosition;
+                    break;
+                }                
+            }*/
+
+            //Camera-object follow camera
+            cameraObject.position = camPosition;
+
+            Vector3 oldPos = gameObjects[0].position;
+            Vector3 oldScale = gameObjects[0].scale;
+            Matrix oldRotMatrix = gameObjects[0].rotationMatrix;
+
+            //Recalculate AABB/bSphere for moving gameObject and cameraObject
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.InitAABB(); //gameObject.InitBSphere();
+
+            }
+            cameraObject.InitAABB();
+
+            //Camera-object collision code 
+
+            //for (int i = 1; i < gameObjects.Count; i++)
+            //{
+                if (gameObjects[0].aabb.Intersects(cameraObject.aabb))
+                //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
+                {
+                    camPosition = oldPosition;
+                    cameraObject.position = oldPosition;
+                }
+            // }
+
+            if (gameObjects[1].aabb.Intersects(cameraObject.aabb))
+            //if  (gameObjects[1].bSphere.Intersects(gameObjects[i].bSphere))
+            {
+                camPosition = oldPosition;
+                cameraObject.position = oldPosition;
+            }
+
+
+            //Object-object collision code 
+            /*for (int i=1; i<gameObjects.Count; i++)
+            {
+                if (gameObjects[0].aabb.Intersects(gameObjects[i].aabb))
+                //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
+                {
+                    gameObjects[0].position = oldPosition;
+                    gameObjects[0].scale = oldScale;
+                    gameObjects[0].rotationMatrix = oldRotMatrix;
+                }
+            }*/
+
+            //Change to menu state
+            if (Keyboard.GetState().IsKeyDown(Keys.Delete))
+            {
+                game.ChangeState(game.menuState);
+            }
+
+            
         }
 
         public void Draw()
@@ -210,7 +269,7 @@ namespace Lab8_GameStateProject
             graphicsDevice.Clear(Color.Gray);
 
             //Draw skybox
-            RasterizerState skyBoxRasterizerState = new RasterizerState();
+            /*RasterizerState skyBoxRasterizerState = new RasterizerState();
             skyBoxRasterizerState.CullMode = CullMode.CullClockwiseFace;
             graphicsDevice.RasterizerState = skyBoxRasterizerState;
 
@@ -220,7 +279,7 @@ namespace Lab8_GameStateProject
 
             RasterizerState rasterizerState = new RasterizerState();
             rasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
-            graphicsDevice.RasterizerState = rasterizerState;
+            graphicsDevice.RasterizerState = rasterizerState;*/
 
             //Depth buffer on
             graphicsDevice.DepthStencilState = 

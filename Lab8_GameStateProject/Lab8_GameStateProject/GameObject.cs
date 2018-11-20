@@ -13,6 +13,7 @@ namespace Lab8_GameStateProject
         public Model model { get; set; }
         public BoundingBox aabb { get; set; } 
         public BoundingSphere bSphere { get; set; }
+        public float radius { get; set; }
 
         //Constructor method
         public GameObject()
