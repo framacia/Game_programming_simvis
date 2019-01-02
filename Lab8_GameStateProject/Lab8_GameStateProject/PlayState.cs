@@ -33,6 +33,7 @@ namespace Lab8_GameStateProject
 
         //GameObject List
         List<GameObject> gameObjects;
+        GameObject cameraObject;
 
         //Font
         private SpriteFont font;
@@ -74,9 +75,7 @@ namespace Lab8_GameStateProject
             };
 
             gameObjects = new List<GameObject>();
-
-            
-
+           
 
             //Setup collisions
             foreach (GameObject gameObject in gameObjects)
@@ -84,6 +83,19 @@ namespace Lab8_GameStateProject
                 gameObject.InitAABB();
                 gameObject.InitBSphere();
             }
+
+            //CameraObject setup
+
+            cameraObject = new GameObject()
+            {
+                model = Content.Load<Model>("monocube\\monoCube"),
+                position = camPosition,
+                scale = new Vector3(1.4f, 0.1f, 1.1f),
+            };
+
+            cameraObject.InitAABB();
+            cameraObject.InitBSphere();
+
         }
 
         public void Enter()
@@ -134,31 +146,6 @@ namespace Lab8_GameStateProject
         {
             Vector3 oldPosition = camPosition;
 
-            //Collision code
-            foreach (GameObject gameObject in gameObjects)
-            {
-                if (Vector3.Distance(camPosition,
-                    gameObjects[0].position) < 35f)
-                {
-                    camPosition = oldPosition;
-                    break;
-                }                
-            }
-
-            //Recalculate AABB/bSphere for moving gameObject
-            /*gameObjects[0].InitAABB(); //gameObjects[0].InitBSphere();
-
-            for (int i=1; i<gameObjects.Count; i++)
-            {
-                if (gameObjects[0].aabb.Intersects(gameObjects[i].aabb))
-                //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
-                {
-                    gameObjects[0].position = oldPosition;
-                    gameObjects[0].scale = oldScale;
-                    gameObjects[0].rotationMatrix = oldRotMatrix;
-                }
-            }*/
-
             //Change to menu state
             if (Keyboard.GetState().IsKeyDown(Keys.Delete))
             {
@@ -206,6 +193,64 @@ namespace Lab8_GameStateProject
 
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget,
                 Vector3.Up);
+
+            //Camera Collision code
+            /*foreach (GameObject gameObject in gameObjects)
+            {
+                if (Vector3.Distance(camPosition,
+                    gameObjects[0].position) < (gameObject.radius + camRadius))
+                {
+                    camPosition = oldPosition;
+                    break;
+                }                
+            }*/
+
+            //Camera-object follow camera
+            cameraObject.position = camPosition;
+
+            Vector3 oldPos = gameObjects[0].position;
+            Vector3 oldScale = gameObjects[0].scale;
+            Matrix oldRotMatrix = gameObjects[0].rotationMatrix;
+
+            //Recalculate AABB/bSphere for moving gameObject and cameraObject
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.InitAABB(); //gameObject.InitBSphere();
+
+            }
+            cameraObject.InitAABB();
+
+            //Camera-object collision code 
+
+            //for (int i = 1; i < gameObjects.Count; i++)
+            //{
+            if (gameObjects[0].aabb.Intersects(cameraObject.aabb))
+            //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
+            {
+                camPosition = oldPosition;
+                cameraObject.position = oldPosition;
+            }
+            // }
+
+            if (gameObjects[1].aabb.Intersects(cameraObject.aabb))
+            //if  (gameObjects[1].bSphere.Intersects(gameObjects[i].bSphere))
+            {
+                camPosition = oldPosition;
+                cameraObject.position = oldPosition;
+            }
+
+
+            //Object-object collision code 
+            /*for (int i=1; i<gameObjects.Count; i++)
+            {
+                if (gameObjects[0].aabb.Intersects(gameObjects[i].aabb))
+                //if  (gameObjects[0].bSphere.Intersects(gameObjects[i].bSphere))
+                {
+                    gameObjects[0].position = oldPosition;
+                    gameObjects[0].scale = oldScale;
+                    gameObjects[0].rotationMatrix = oldRotMatrix;
+                }
+            }*/
         }
 
         public void Draw()
