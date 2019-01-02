@@ -108,12 +108,12 @@ namespace Lab8_GameStateProject
                 scale = new Vector3(0.5f, 0.5f, 0.5f),
             });
 
-            gameObjects.Add(new GameObject()
-            {
-                model = Content.Load<Model>("sh_10\\SH_BUILDING_10"),
-                position = new Vector3(0.75f, -0.975f, 10.13f),
-                scale = new Vector3(0.5f, 0.5f, 0.5f),
-            });
+            //gameObjects.Add(new GameObject()
+            //{
+            //    model = Content.Load<Model>("sh_10\\SH_BUILDING_10"),
+            //    position = new Vector3(0.75f, -0.975f, 10.13f),
+            //    scale = new Vector3(0.5f, 0.5f, 0.5f),
+            //});
 
             gameObjects.Add(new GameObject()
             {
